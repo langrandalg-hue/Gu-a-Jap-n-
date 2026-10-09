@@ -123,8 +123,22 @@ tr:nth-child(even) td{background:#f8fafc}
 .photo-tip{margin-top:12px;padding:12px 14px;border:1px solid #fde68a;border-radius:12px;background:#fffbeb;color:#172033}
 .photo-tip b{color:#0f172a}
 .photo-tip .map{margin-top:7px}
-.map-category{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff}
-.map-category b{display:block;margin-bottom:5px}
+.map-category{padding:12px 14px;border:1px solid #cbd5e1;border-radius:12px;background:#fff!important;color:#172033!important;font-size:15px;line-height:1.55;opacity:1}
+.map-category b{display:block;margin-bottom:5px;color:#0f172a!important;font-weight:900;opacity:1}
+.map-category br{display:block;margin-bottom:3px}
+.trip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.trip-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.trip-form label{font-weight:700;font-size:13px;color:#334155}
+.trip-form input,.trip-form select,.trip-form textarea{width:100%;margin-top:4px;padding:10px;border:1px solid var(--line);border-radius:9px;font:inherit;background:#fff;color:#172033}
+.trip-form textarea{min-height:90px;resize:vertical}
+.trip-actions{margin-top:10px}
+.trip-item{border:1px solid var(--line);border-radius:12px;padding:13px;margin:10px 0;background:#f8fafc}
+.trip-item h3{margin-bottom:5px}
+.trip-meta{font-size:13px;color:#475569}
+.trip-actions button{border:0;border-radius:9px;padding:9px 12px;margin:4px 5px 0 0;font-weight:800;cursor:pointer;background:#172033;color:#fff}
+.trip-actions button.delete{background:#b91c1c}
+.trip-empty{color:var(--muted);font-size:14px}
+@media(max-width:680px){.trip-grid,.trip-form{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -134,11 +148,11 @@ tr:nth-child(even) td{background:#f8fafc}
 </div>
 <header class="hero">
 <h1>🇯🇵 Guía interactiva de Japón</h1>
-<p><strong>Itinerario maestro · 12 días</strong></p>
+<p><strong>Itinerario · 12 días</strong></p>
 <p>Tokio → Kawaguchiko → Hakone → Osaka → Kioto → Hiroshima/Miyajima → Nara → Tokio</p>
 <span class="badge">Guía práctica para viajar por Japón<br/><small>Creada por Orlando</small></span>
 </header>
-<nav aria-label="Accesos rápidos a todas las secciones" class="nav"><a href="#itinerario">🗓️ Itinerario</a><a href="#maps">📍 Maps</a><a href="#comida">🍜 Comida</a><a href="#transporte">🚆 Transporte</a><a href="#suica">🚇 Suica/PASMO</a><a href="#shinkansen">🚄 Shinkansen</a><a href="#jrpass">🚅 JR Pass</a><a href="#esim">📶 eSIM</a><a href="#dinero">💴 Dinero</a><a href="#dinero-extra">💴 Dinero y pagos</a><a href="#compras">🛍️ Compras</a><a href="#apps">📱 Apps</a><a href="#hoteles-equipaje">🏨 Hoteles</a><a href="#emergencias">🆘 Emergencias</a><a href="#japones">🗣️ Japonés</a><a href="#fotos">📸 Fotos</a><a href="#consejos">💡 Consejos</a><a href="#preparacion">✅ Preparación</a><a href="#manual-rapido">📖 Manual rápido</a><a href="#fuentes">🔗 Fuentes oficiales</a><a href="#recurso">🔗 Recurso recomendado</a></nav>
+<nav aria-label="Accesos rápidos a todas las secciones" class="nav"><a href="#itinerario">🗓️ Itinerario</a><a href="#maps">📍 Maps</a><a href="#comida">🍜 Comida</a><a href="#civitatis">🎟️ Visitas en español</a><a href="#transporte">🚆 Transporte</a><a href="#suica">🚇 Suica/PASMO</a><a href="#shinkansen">🚄 Shinkansen</a><a href="#jrpass">🚅 JR Pass</a><a href="#esim">📶 eSIM</a><a href="#dinero">💴 Dinero</a><a href="#dinero-extra">💴 Dinero y pagos</a><a href="#compras">🛍️ Compras</a><a href="#apps">📱 Apps</a><a href="#hoteles-equipaje">🏨 Hoteles</a><a href="#emergencias">🆘 Emergencias</a><a href="#japones">🗣️ Japonés</a><a href="#fotos">📸 Fotos</a><a href="#consejos">💡 Consejos</a><a href="#mi-viaje">📂 Mi viaje</a><a href="#preparacion">✅ Preparación</a><a href="#manual-rapido">📖 Manual rápido</a><a href="#fuentes">🔗 Fuentes oficiales</a><a href="#recurso">🔗 Recurso recomendado</a></nav>
 
 <footer class="footer">
 Guía de Japón · 12 días<br/>
@@ -169,7 +183,9 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
 <div class="dayhead"><span class="daynum">Día 4</span><div><h3>KAWAGUCHIKO</h3><p>Monte Fuji · Chureito · lago</p></div></div>
 <ul><li>Salida temprano desde Tokio</li><li>Pagoda Chureito y Arakurayama Sengen Park</li><li>Lago Kawaguchi: paseo por la orilla y miradores del Fuji</li><li>Noche en Kawaguchiko para disfrutar de un ritmo más tranquilo</li></ul>
 <div class="photo-tip"><b>📸 Foto recomendada:</b> Para la imagen clásica del Fuji con la pagoda, el punto de referencia es Arakurayama Sengen Park/Chureito. En el lago Kawaguchi, busca la orilla norte para intentar conseguir el Fuji reflejado en el agua cuando el viento lo permita. <br/><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chureito+Pagoda+viewpoint+Fujiyoshida" rel="noopener" target="_blank">📸 Fuji + Chureito</a> <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Lake+Kawaguchi+north+shore+Mount+Fuji" rel="noopener" target="_blank">📸 Lago Kawaguchi — Fuji</a></div>
-<div class="maps"><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chureito%20Pagoda%2C%20Fujiyoshida%2C%20Yamanashi" rel="noopener" target="_blank">📍 Pagoda Chureito</a> <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Lake%20Kawaguchi%2C%20Yamanashi" rel="noopener" target="_blank">📍 Lago Kawaguchi</a> <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko%20Station%2C%20Yamanashi" rel="noopener" target="_blank">📍 Kawaguchiko Station</a></div>
+<div class="maps"><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chureito%20Pagoda%2C%20Fujiyoshida%2C%20Yamanashi" rel="noopener" target="_blank">📍 Pagoda Chureito</a> <div class="photo-tip"><b>📸 Foto recomendada: túnel Monji</b> Añade este punto a la ruta fotográfica de Kawaguchiko; comprueba la visibilidad del Fuji y el estado del acceso cuando llegues.<br/><a class="map" href="https://maps.app.goo.gl/rLnr1uhmxGRaNF2L6?g_st=ic" target="_blank" rel="noopener">📍 Abrir túnel Monji en Google Maps</a></div>
+<div class="photo-tip"><b>📸 Foto recomendada: calle Honcho</b> Busca el encuadre de la calle con el monte Fuji al fondo. Respeta a los residentes, no bloquees la calzada y fotografía desde una zona segura.<br/><a class="map" href="https://maps.app.goo.gl/3TPVittxD7ArJ4i37?g_st=ic" target="_blank" rel="noopener">📍 Abrir calle Honcho en Google Maps</a></div>
+<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Lake%20Kawaguchi%2C%20Yamanashi" rel="noopener" target="_blank">📍 Lago Kawaguchi</a> <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Kawaguchiko%20Station%2C%20Yamanashi" rel="noopener" target="_blank">📍 Kawaguchiko Station</a></div>
 </article>
 <article class="day">
 <div class="dayhead"><span class="daynum">Día 5</span><div><h3>HAKONE</h3><p>Owakudani · circuito Hakone · ryokan + onsen</p></div></div>
@@ -259,6 +275,13 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
 <h2>🍜 3. Qué comer sin disparar el presupuesto</h2>
 <table><thead><tr><th>Zona</th><th>Qué probar</th><th>Presupuesto orientativo</th><th>Idea</th></tr></thead><tbody><tr><td><b>Tokio / Shinjuku</b></td><td>Ramen, yakitori, gyudon</td><td>¥700–1.500 aprox.</td><td>Omoide Yokocho, Shinjuku</td></tr><tr><td><b>Tokio / Asakusa</b></td><td>Tempura, soba, melonpan</td><td>¥500–1.500</td><td>Nakamise-dori y calles próximas a Senso-ji</td></tr><tr><td><b>Kawaguchiko</b></td><td>Hoto noodles</td><td>¥1.000–1.800</td><td>Especialidad local de Yamanashi</td></tr><tr><td><b>Hakone</b></td><td>Kaiseki del ryokan / soba</td><td>Variable</td><td>Aprovecha la cena del ryokan si está incluida</td></tr><tr><td><b>Osaka</b></td><td>Takoyaki, okonomiyaki, kushikatsu</td><td>¥800–1.800</td><td>Dotonbori / Shinsekai</td></tr><tr><td><b>Kioto</b></td><td>Ramen, soba, tofu, matcha</td><td>¥800–2.000</td><td>Arashiyama y centro de Kioto</td></tr><tr><td><b>Hiroshima</b></td><td>Okonomiyaki estilo Hiroshima</td><td>¥1.000–1.800</td><td>Zona de la estación o centro</td></tr><tr><td><b>Nara</b></td><td>Kakinoha-zushi / mochi</td><td>¥800–1.800</td><td>Centro de Nara</td></tr></tbody></table>
 <div class="tip"><b>Consejo:</b> en Japón puedes comer muy bien sin restaurantes caros. Para desayunos y comidas rápidas, combini como 7-Eleven, FamilyMart y Lawson son muy útiles; para cenas, busca izakaya locales y restaurantes con menú visible en la entrada.</div>
+<h3>🔎 Guías para encontrar comida rica y económica</h3>
+<p>Estas guías permiten explorar opciones por barrios y presupuesto. Comprueba horarios, precios y reseñas recientes antes de ir.</p>
+<div class="grid">
+<div class="map-category"><b>🗼 Tokio</b><p>Ramen, gyudon, soba, menús de mediodía y restaurantes de barrio.</p><a class="btn" href="https://www.gotokyo.org/es/plan/discount/index.html" target="_blank" rel="noopener">Guía oficial: gastronomía asequible</a><a class="btn" href="https://viajajapon.com/gastronomia/donde-comer-en-tokio" target="_blank" rel="noopener">Dónde comer en Tokio</a></div>
+<div class="map-category"><b>🐙 Osaka</b><p>Takoyaki, okonomiyaki, kushikatsu y zonas populares para comer.</p><a class="btn" href="https://osaka-info.jp/en/spot/gourmet/" target="_blank" rel="noopener">Guía gastronómica oficial</a></div>
+<div class="map-category"><b>⛩️ Kioto</b><p>Ramen, soba, tofu, obanzai y restaurantes por zona y presupuesto.</p><a class="btn" href="https://kyoto.travel/en/restaurants/restaurants.html" target="_blank" rel="noopener">Buscar restaurantes por presupuesto</a><a class="btn" href="https://kyoto.travel/en/food-and-drink/" target="_blank" rel="noopener">Guía de comida de Kioto</a></div>
+</div>
 </section><section id="transporte">
 <h2>🚆 4. Transporte: lo que yo haría</h2>
 <div class="grid">
@@ -644,7 +667,30 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
 <li><b>Para el Fuji, ten un plan B.</b> La visibilidad puede cambiar completamente según el tiempo.</li>
 <li><b>Ryokan + onsen:</b> es una de las experiencias que más merece la pena mantener en este itinerario.</li>
 </ol>
-</section><section id="preparacion">
+</section><section id="civitatis"><h2>🎟️ Visitas guiadas y excursiones en español</h2><p>Consulta visitas guiadas, free tours, excursiones y actividades en Japón. Revisa siempre el idioma, el punto de encuentro, el precio final y las condiciones de cancelación antes de reservar.</p><div class="grid"><div class="map-category"><b>🇯🇵 Japón</b><p>Buscador general de visitas y excursiones.</p><a class="btn" href="https://www.civitatis.com/es/japon" target="_blank" rel="noopener">Ver actividades en Japón</a></div><div class="map-category"><b>🗼 Tokio</b><p>Visitas guiadas y experiencias en la capital.</p><a class="btn" href="https://www.civitatis.com/es/tokio" target="_blank" rel="noopener">Actividades en Tokio</a></div><div class="map-category"><b>⛩️ Kioto</b><p>Templos, barrios históricos y excursiones.</p><a class="btn" href="https://www.civitatis.com/es/kioto" target="_blank" rel="noopener">Actividades en Kioto</a></div><div class="map-category"><b>🐙 Osaka</b><p>Gastronomía, recorridos urbanos y excursiones.</p><a class="btn" href="https://www.civitatis.com/es/osaka" target="_blank" rel="noopener">Actividades en Osaka</a></div></div></section>
+<section id="mi-viaje">
+<h2>📂 Mi viaje</h2>
+<p>Un espacio privado en este dispositivo para guardar tus datos de viaje: vuelos, hoteles, actividades, seguro, transporte y otros datos importantes.</p>
+<div class="info"><b>🛂 Visit Japan Web</b><br>Desde aquí puedes guardar el estado del trámite y acceder directamente a Visit Japan Web para mostrar tu QR. Por seguridad, la guía <b>no guarda ni copia el QR</b>: el código se consulta desde Visit Japan Web.</div>
+<div class="trip-actions"><button type="button" onclick="window.open('https://www.vjw.digital.go.jp/','_blank')">🟢 Abrir Visit Japan Web</button></div>
+<hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+<h3>➕ Añadir un dato o reserva</h3>
+<form id="tripForm" class="trip-form" onsubmit="saveTrip(event)">
+<label>Tipo<select id="tripType"><option>Vuelo</option><option>Hotel / ryokan</option><option>Transporte</option><option>Actividad / entrada</option><option>Seguro</option><option>Visit Japan Web</option><option>Otro</option></select></label>
+<label>Nombre / título<input id="tripTitle" required placeholder="Ej. Hotel en Shinjuku"></label>
+<label>Empresa / proveedor<input id="tripProvider" placeholder="Ej. ANA, Booking, JR..."></label>
+<label>Fecha<input id="tripDate" type="date"></label>
+<label>Referencia / localizador<input id="tripRef" placeholder="Localizador, póliza, reserva..."></label>
+<label>Teléfono<input id="tripPhone" inputmode="tel" placeholder="Teléfono de contacto"></label>
+<label style="grid-column:1/-1">Enlace<input id="tripUrl" type="url" placeholder="https://..."></label>
+<label style="grid-column:1/-1">Notas<textarea id="tripNotes" placeholder="Horario, dirección, información importante..."></textarea></label>
+<div class="trip-actions" style="grid-column:1/-1"><button type="submit">💾 Guardar</button><button type="button" onclick="clearTripForm()">Limpiar</button></div>
+</form>
+<h3 style="margin-top:20px">📋 Mis datos guardados</h3>
+<div id="tripList"><p class="trip-empty">Todavía no has guardado ningún dato.</p></div>
+<p class="small">🔒 Los datos se guardan únicamente en el almacenamiento local de este navegador/dispositivo. Si borras los datos del sitio, cambias de navegador o utilizas navegación privada, pueden desaparecer.</p>
+</section>
+<section id="preparacion">
 <h2>📱 18. Preparación antes de viajar</h2>
 <div class="checklist">
 <div class="check">Pasaporte en vigor</div>
@@ -745,5 +791,24 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
 <p>Para ampliar la información y preparar el primer viaje a Japón:</p>
 <p><a class="btn" href="https://japonismo.com/primeros-pasos-preparar-primer-viaje-japon" rel="noopener" target="_blank">🇯🇵 Guía de Japonismo: primeros pasos para preparar un viaje a Japón</a></p>
 </section></div>
+<script>
+(function(){
+  const KEY='guiaJaponMiViaje_v22';
+  function getItems(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return []}}
+  function setItems(items){localStorage.setItem(KEY,JSON.stringify(items));renderItems()}
+  window.saveTrip=function(ev){
+    ev.preventDefault();
+    const item={id:Date.now(),type:document.getElementById('tripType').value,title:document.getElementById('tripTitle').value.trim(),provider:document.getElementById('tripProvider').value.trim(),date:document.getElementById('tripDate').value,ref:document.getElementById('tripRef').value.trim(),phone:document.getElementById('tripPhone').value.trim(),url:document.getElementById('tripUrl').value.trim(),notes:document.getElementById('tripNotes').value.trim()};
+    const items=getItems(); items.push(item); setItems(items); clearTripForm();
+  };
+  window.clearTripForm=function(){document.getElementById('tripForm').reset()};
+  window.deleteTrip=function(id){if(!confirm('¿Eliminar este dato de Mi viaje?'))return;setItems(getItems().filter(x=>x.id!==id))};
+  window.editTrip=function(id){const x=getItems().find(x=>x.id===id);if(!x)return; document.getElementById('tripType').value=x.type; document.getElementById('tripTitle').value=x.title; document.getElementById('tripProvider').value=x.provider||''; document.getElementById('tripDate').value=x.date||''; document.getElementById('tripRef').value=x.ref||''; document.getElementById('tripPhone').value=x.phone||''; document.getElementById('tripUrl').value=x.url||''; document.getElementById('tripNotes').value=x.notes||''; deleteTripSilently(id); document.getElementById('tripForm').scrollIntoView({behavior:'smooth',block:'start'})};
+  function deleteTripSilently(id){setItems(getItems().filter(x=>x.id!==id))}
+  function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function renderItems(){const box=document.getElementById('tripList');if(!box)return;const items=getItems();if(!items.length){box.innerHTML='<p class="trip-empty">Todavía no has guardado ningún dato.</p>';return;}box.innerHTML=items.map(x=>{let details=[];if(x.provider)details.push('<b>Proveedor:</b> '+esc(x.provider));if(x.date)details.push('<b>Fecha:</b> '+esc(x.date));if(x.ref)details.push('<b>Referencia:</b> '+esc(x.ref));if(x.phone)details.push('<b>Tel.:</b> '+esc(x.phone));return '<article class="trip-item"><h3>'+esc(x.type)+' · '+esc(x.title)+'</h3><div class="trip-meta">'+details.join(' · ')+'</div>'+(x.notes?'<p>'+esc(x.notes)+'</p>':'')+(x.url?'<p><a class="btn" href="'+esc(x.url)+'" target="_blank" rel="noopener">🔗 Abrir enlace</a></p>':'')+'<div class="trip-actions"><button type="button" onclick="editTrip('+x.id+')">✏️ Editar</button><button class="delete" type="button" onclick="deleteTrip('+x.id+')">🗑️ Eliminar</button></div></article>'}).join('')}
+  document.addEventListener('DOMContentLoaded',renderItems);
+})();
+</script>
 </body>
 </html>
