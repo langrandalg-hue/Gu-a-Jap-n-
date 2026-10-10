@@ -1,5 +1,5 @@
 // v26.0: actualiza la guía en GitHub Pages y limpia cachés anteriores
-const CACHE='guia-japon-v26-conversor-yenes-euros';
+const CACHE='guia-japon-v27';
 const CORE=['./','./index.html?v=26.0','./manifest.webmanifest?v=26.0','./apple-touch-icon.png?v=26.0'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));

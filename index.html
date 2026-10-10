@@ -159,7 +159,7 @@ tr:nth-child(even) td{background:#f8fafc}
 <p>Tokio → Kawaguchiko → Hakone → Osaka → Kioto → Hiroshima/Miyajima → Nara → Tokio</p>
 <span class="badge">Guía práctica para viajar por Japón<br/><small>Creada por Orlando</small></span>
 </header>
-<nav aria-label="Accesos rápidos a todas las secciones" class="nav"><a href="#itinerario">🗓️ Itinerario</a><a href="#maps">📍 Maps</a><a href="#comida">🍜 Comida</a><a href="#civitatis">🎟️ Visitas en español</a><a href="#transporte">🚆 Transporte</a><a href="#suica">🚇 Suica/PASMO</a><a href="#shinkansen">🚄 Shinkansen</a><a href="#jrpass">🚅 JR Pass</a><a href="#esim">📶 eSIM</a><a href="#dinero">💴 Dinero</a><a href="#dinero-extra">💴 Dinero y pagos</a><a href="#conversor">💱 Conversor ¥/€</a><a href="#compras">🛍️ Compras</a><a href="#apps">📱 Apps</a><a href="#hoteles-equipaje">🏨 Hoteles</a><a href="#emergencias">🆘 Emergencias</a><a href="#japones">🗣️ Japonés</a><a href="#fotos">📸 Fotos</a><a href="#consejos">💡 Consejos</a><a href="#actividades">🎎 Actividades</a><a href="#mi-viaje">📂 Mi viaje</a><a href="#preparacion">✅ Preparación</a><a href="#manual-rapido">📖 Manual rápido</a><a href="#fuentes">🔗 Fuentes oficiales</a><a href="#recurso">🔗 Recurso recomendado</a></nav>
+<nav aria-label="Accesos rápidos a todas las secciones" class="nav"><a href="#itinerario">🗓️ Itinerario</a><a href="#maps">📍 Maps</a><a href="#comida">🍜 Comida</a><a href="#civitatis">🎟️ Visitas en español</a><a href="#transporte">🚆 Transporte</a><a href="#suica">🚇 Suica/PASMO</a><a href="#shinkansen">🚄 Shinkansen</a><a href="#jrpass">🚅 JR Pass</a><a href="#esim">📶 eSIM</a><a href="#dinero">💴 Dinero</a><a href="#dinero-extra">💴 Dinero y pagos</a><a href="#conversor">💱 Conversor ¥/€</a><a href="#comparador-precios">🛍️ Comparador de precios</a><a href="#compras">🛍️ Compras</a><a href="#apps">📱 Apps</a><a href="#hoteles-equipaje">🏨 Hoteles</a><a href="#emergencias">🆘 Emergencias</a><a href="#japones">🗣️ Japonés</a><a href="#fotos">📸 Fotos</a><a href="#consejos">💡 Consejos</a><a href="#actividades">🎎 Actividades</a><a href="#mi-viaje">📂 Mi viaje</a><a href="#preparacion">✅ Preparación</a><a href="#manual-rapido">📖 Manual rápido</a><a href="#fuentes">🔗 Fuentes oficiales</a><a href="#recurso">🔗 Recurso recomendado</a></nav>
 
 <footer class="footer">
 Guía de Japón · 12 días<br/>
@@ -501,7 +501,77 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
 <div class="info" style="min-width:0"><h3>🔄 Cambio activo</h3><p id="fx-status" aria-live="polite">Cargando cambio de referencia…</p><p><b id="fx-rate">—</b></p><p class="small">El cambio de referencia puede diferir del aplicado por Revolut, tu banco, cajeros o comercios.</p><div class="actions" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="fx-refresh">Actualizar cambio</button><button class="btn" type="button" id="fx-reset">Restablecer cambio automático</button></div><p class="small">Fuente de referencia: <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.es.html" target="_blank" rel="noopener">Banco Central Europeo</a>. La consulta automática usa un servicio que distribuye los datos de referencia del BCE.</p></div>
 <div class="info" style="min-width:0"><h3>✍️ Poner mi propio cambio</h3><label for="fx-manual">1 € = cuántos yenes (¥)</label><input id="fx-manual" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej. 175,00" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:16px"><div class="actions" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" type="button" id="fx-apply">Usar mi cambio</button></div><p id="fx-manual-msg" class="small" aria-live="polite">El cambio manual se guarda en este dispositivo.</p></div></div>
 <div class="info"><h3>🧮 Calculadora</h3><div class="grid" style="align-items:end"><div><label for="fx-eur">Euros (€)</label><input id="fx-eur" type="number" min="0" step="0.01" inputmode="decimal" value="100" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:16px"></div><div><label for="fx-jpy">Yenes (¥)</label><input id="fx-jpy" type="number" min="0" step="1" inputmode="decimal" value="17500" style="width:100%;box-sizing:border-box;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:16px"></div></div><p class="small">Cambia euros o yenes y el otro importe se calculará con el cambio activo.</p></div>
+
 </section>
+<section id="comparador-precios" class="guide-section">
+<h2>🛍️ Comparador de precios en España (prueba v27)</h2>
+<p>Haz una foto o elige una imagen del producto, escribe la marca y el modelo, introduce el precio japonés y abre búsquedas de tiendas para comparar precios en España. La foto es una referencia visual: no identifica automáticamente el producto.</p>
+<div class="info">
+<label for="pc-photo"><b>1. Foto del producto (opcional)</b></label>
+<input id="pc-photo" type="file" accept="image/*" capture="environment" style="display:block;width:100%;box-sizing:border-box;margin:10px 0;padding:12px;border:1px solid #bbb;border-radius:8px;font-size:16px">
+<img id="pc-preview" alt="Vista previa del producto" hidden style="display:none;max-width:100%;max-height:280px;object-fit:contain;border-radius:10px;margin:10px auto">
+<label for="pc-model"><b>2. Marca y modelo</b></label>
+<input id="pc-model" type="text" placeholder="Ej.: Onitsuka Tiger Mexico 66" autocomplete="off" style="width:100%;box-sizing:border-box;margin:8px 0 16px;padding:13px;border:1px solid #bbb;border-radius:8px;font-size:16px">
+<label for="pc-yen"><b>3. Precio en Japón (¥)</b></label>
+<input id="pc-yen" type="number" min="0" step="1" inputmode="decimal" placeholder="Ej.: 16500" style="width:100%;box-sizing:border-box;margin:8px 0 16px;padding:13px;border:1px solid #bbb;border-radius:8px;font-size:16px">
+<label for="pc-rate"><b>4. Cambio usado (yenes por euro)</b></label>
+<input id="pc-rate" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Ej.: 165" style="width:100%;box-sizing:border-box;margin:8px 0 12px;padding:13px;border:1px solid #bbb;border-radius:8px;font-size:16px">
+<p class="small">Se propone el cambio activo del conversor de la guía cuando esté disponible; puedes cambiarlo aquí sin alterar el conversor.</p>
+<button class="btn" type="button" id="pc-calc">Calcular precio aproximado</button>
+<p id="pc-result" class="info" aria-live="polite">Introduce el precio en yenes para calcular una estimación en euros.</p>
+<button class="btn" type="button" id="pc-search" style="background:#333;margin-top:8px">Buscar este modelo en España</button>
+<div id="pc-links" aria-live="polite" style="display:grid;gap:10px;margin-top:12px"></div>
+<p class="small">Las búsquedas se abren en páginas externas. Los precios, disponibilidad, envío e impuestos deben comprobarse en cada tienda. La comparación no es automática y no tiene coste.</p>
+</div>
+</section>
+<script>
+(function(){
+ const $=id=>document.getElementById(id);
+ const photo=$('pc-photo'), preview=$('pc-preview'), model=$('pc-model'), yen=$('pc-yen'), rate=$('pc-rate'), result=$('pc-result'), links=$('pc-links');
+ photo.addEventListener('change',()=>{
+   const file=photo.files&&photo.files[0];
+   if(!file){preview.hidden=true;preview.style.display='none';preview.removeAttribute('src');return;}
+   if(!file.type.startsWith('image/')){result.textContent='Elige un archivo de imagen.';return;}
+   const reader=new FileReader();
+   reader.onload=()=>{preview.src=reader.result;preview.hidden=false;preview.style.display='block';};
+   reader.readAsDataURL(file);
+ });
+ function activeRate(){
+   const fxText=$('fx-rate')?.textContent||'';
+   const m=fxText.match(/1\s*€\s*=\s*([\d.,\s]+)\s*¥/);
+   if(m){const n=Number(m[1].replace(/\s/g,'').replace(/\./g,'').replace(',','.'));if(n>0)return n;}
+   return 0;
+ }
+ const suggested=activeRate();if(suggested>0)rate.value=suggested.toFixed(2);
+ $('pc-calc').addEventListener('click',()=>{
+   const y=Number(yen.value), r=Number(String(rate.value).replace(',','.'));
+   if(yen.value===''||!Number.isFinite(y)||y<0){result.textContent='Introduce un precio válido en yenes.';return;}
+   if(!Number.isFinite(r)||r<=0){result.textContent='Introduce un cambio válido, por ejemplo 165 yenes por euro.';return;}
+   result.textContent='Precio aproximado: '+(y/r).toLocaleString('es-ES',{style:'currency',currency:'EUR'})+' (sin posibles comisiones, impuestos o gastos adicionales).';
+ });
+ function search(){
+   links.replaceChildren();
+   const text=model.value.trim();
+   if(!text){result.textContent='Escribe primero la marca y el modelo en el campo correspondiente.';model.focus();return;}
+   const q=encodeURIComponent(text);
+   const items=[
+     ['Google Shopping','https://www.google.com/search?tbm=shop&q='+q],
+     ['Idealo España','https://www.idealo.es/precios/MainSearchProductCategory.html?q='+q],
+     ['Buscar precios en tiendas españolas','https://www.google.com/search?q='+q+'+precio+España']
+   ];
+   const intro=document.createElement('p');intro.textContent='Elige una búsqueda para abrirla:';links.appendChild(intro);
+   for(const item of items){
+     const a=document.createElement('a');a.href=item[1];a.target='_blank';a.rel='noopener noreferrer';a.textContent='🔎 '+item[0]+' ↗';
+     a.style.cssText='display:block;padding:13px;border-radius:8px;background:#f3f4f6;color:#b91c1c;font-weight:700;text-decoration:underline;overflow-wrap:anywhere';
+     links.appendChild(a);
+   }
+ }
+ $('pc-search').addEventListener('click',search);
+ model.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();search();}});
+})();
+</script>
+<section id="placeholder-converter-original" hidden style="display:none"></section>
+<section id="conversor">
 <script>
 (function(){
  const $=id=>document.getElementById(id); let rate=Number(localStorage.getItem('guiaJaponFxManual'))||null; let mode=rate?'manual':'auto'; let rateDate=localStorage.getItem('guiaJaponFxDate')||''; let lastEdited='eur';
