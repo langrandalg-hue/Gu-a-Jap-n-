@@ -1,9 +1,9 @@
 {
-  "name": "Guía interactiva de Japón · 12 días",
+  "name": "Guía Japón",
   "short_name": "Guía Japón",
   "description": "Guía interactiva de viaje a Japón de 12 días, optimizada para móvil.",
   "lang": "es",
-  "start_url": "./index.html?v=24.0",
+  "start_url": "./index.html?v=25.0",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
@@ -11,19 +11,19 @@
   "background_color": "#f5f7fb",
   "icons": [
     {
-      "src": "apple-touch-icon.png?rev=24.0",
+      "src": "apple-touch-icon.png?rev=25.0",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "apple-touch-icon.png?rev=24.0",
+      "src": "apple-touch-icon.png?rev=25.0",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "apple-touch-icon.png?rev=24.0",
+      "src": "apple-touch-icon.png?rev=25.0",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

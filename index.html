@@ -5,14 +5,14 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#b91c1c" name="theme-color"/>
-<link href="./manifest.webmanifest?v=22.0" rel="manifest"/>
-<link href="./apple-touch-icon.png?v=22.0" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./manifest.webmanifest?v=25.0" rel="manifest"/>
+<link href="./apple-touch-icon.png?v=25.0" rel="apple-touch-icon" sizes="180x180"/>
 <meta content="Guía Japón" name="apple-mobile-web-app-title"/>
-<link href="./apple-touch-icon.png?v=22.0" rel="apple-touch-icon" sizes="180x180"/>
-<link href="./apple-touch-icon.png?v=22.0" rel="icon" sizes="192x192" type="image/png"/>
+<link href="./apple-touch-icon.png?v=25.0" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./apple-touch-icon.png?v=25.0" rel="icon" sizes="192x192" type="image/png"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
-<title>Japón 12 días · Guía práctica para viajeros</title>
+<title>Guía Japón</title>
 <style>
 :root{--red:#b91c1c;--dark:#172033;--ink:#243044;--muted:#64748b;--bg:#f5f7fb;--card:#fff;--line:#e2e8f0;--blue:#1d4ed8;--green:#166534}
 *{box-sizing:border-box}
@@ -825,7 +825,23 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
   window.editTrip=function(id){const x=getItems().find(x=>x.id===id);if(!x)return;document.getElementById('tripType').value=x.type;document.getElementById('tripTitle').value=x.title;document.getElementById('tripProvider').value=x.provider||'';document.getElementById('tripDate').value=x.date||'';document.getElementById('tripRef').value=x.ref||'';document.getElementById('tripPhone').value=x.phone||'';document.getElementById('tripUrl').value=x.url||'';document.getElementById('tripNotes').value=x.notes||'';deleteTripSilently(id);document.getElementById('tripForm').scrollIntoView({behavior:'smooth',block:'start'})};
   function deleteTripSilently(id){setItems(getItems().filter(x=>x.id!==id))}
   function esc(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-  async function renderItems(){const box=document.getElementById('tripList');if(!box)return;const items=getItems();if(!items.length){box.innerHTML='<p class="trip-empty">Todavía no has guardado ningún dato.</p>';return;}const cards=[];for(const x of items){let details=[];if(x.provider)details.push('<b>Proveedor:</b> '+esc(x.provider));if(x.date)details.push('<b>Fecha:</b> '+esc(x.date));if(x.ref)details.push('<b>Referencia:</b> '+esc(x.ref));if(x.phone)details.push('<b>Tel.:</b> '+esc(x.phone));const files=await getAttachments(x.id);const links=files.map(f=>'<p><a class="btn" href="'+f.data+'" download="'+esc(f.name)+'">📎 '+esc(f.name)+'</a></p>').join('');cards.push('<article class="trip-item"><h3>'+esc(x.type)+' · '+esc(x.title)+'</h3><div class="trip-meta">'+details.join(' · ')+'</div>'+(x.notes?'<p>'+esc(x.notes)+'</p>':'')+(x.url?'<p><a class="btn" href="'+esc(x.url)+'" target="_blank" rel="noopener">🔗 Abrir enlace</a></p>':'')+links+'<div class="trip-actions"><button type="button" onclick="editTrip('+x.id+')">✏️ Editar</button><button class="delete" type="button" onclick="deleteTrip('+x.id+')">🗑️ Eliminar</button></div></article>')}box.innerHTML=cards.join('')}
+  window.openTripAttachment=async function(fileId){
+    let win=null;
+    try{
+      win=window.open('about:blank','_blank');
+      const db=await openDB();
+      const file=await new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readonly');const req=tx.objectStore(STORE).get(fileId);req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)});
+      db.close();
+      if(!file||!file.data)throw new Error('No se encuentra el archivo guardado.');
+      const parts=file.data.split(',');
+      const mime=(file.type&&file.type!=='application/octet-stream')?file.type:(parts[0].match(/data:([^;]+)/)||[])[1]||'application/octet-stream';
+      const binary=atob(parts[1]||'');const bytes=new Uint8Array(binary.length);for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+      const url=URL.createObjectURL(new Blob([bytes],{type:mime}));
+      if(win){win.location.href=url;}else{const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.click()}
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+    }catch(err){if(win)win.close();alert('No se ha podido abrir este archivo. Puede que el formato no sea compatible con la vista previa del iPhone. Prueba con un PDF o una imagen, o vuelve a adjuntarlo.')}
+  };
+  async function renderItems(){const box=document.getElementById('tripList');if(!box)return;const items=getItems();if(!items.length){box.innerHTML='<p class="trip-empty">Todavía no has guardado ningún dato.</p>';return;}const cards=[];for(const x of items){let details=[];if(x.provider)details.push('<b>Proveedor:</b> '+esc(x.provider));if(x.date)details.push('<b>Fecha:</b> '+esc(x.date));if(x.ref)details.push('<b>Referencia:</b> '+esc(x.ref));if(x.phone)details.push('<b>Tel.:</b> '+esc(x.phone));const files=await getAttachments(x.id);const links=files.map(f=>'<p><button class="btn" type="button" onclick="openTripAttachment(\''+esc(f.id)+'\')">📎 Abrir archivo: '+esc(f.name)+'</button></p>').join('');cards.push('<article class="trip-item"><h3>'+esc(x.type)+' · '+esc(x.title)+'</h3><div class="trip-meta">'+details.join(' · ')+'</div>'+(x.notes?'<p>'+esc(x.notes)+'</p>':'')+(x.url?'<p><a class="btn" href="'+esc(x.url)+'" target="_blank" rel="noopener">🔗 Abrir enlace</a></p>':'')+links+'<div class="trip-actions"><button type="button" onclick="editTrip('+x.id+')">✏️ Editar</button><button class="delete" type="button" onclick="deleteTrip('+x.id+')">🗑️ Eliminar</button></div></article>')}box.innerHTML=cards.join('')}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderItems);else renderItems();
 })();
 </script>
