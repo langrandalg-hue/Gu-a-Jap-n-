@@ -573,7 +573,9 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
    const q=encodeURIComponent(text);
    const items=[
      ['Google Shopping','https://www.google.com/search?tbm=shop&q='+q],
-     ['Idealo España','https://www.idealo.es/precios/MainSearchProductCategory.html?q='+q],
+     ['Amazon España','https://www.amazon.es/s?k='+q],
+     ['AliExpress España','https://www.aliexpress.com/w/wholesale-'+q+'.html'],
+     ['Temu España','https://www.temu.com/es/search_result.html?search_key='+q],
      ['Buscar precios en tiendas españolas','https://www.google.com/search?q='+q+'+precio+España']
    ];
    const intro=document.createElement('p');intro.textContent='Elige una búsqueda para abrirla:';links.appendChild(intro);

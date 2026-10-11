@@ -3,7 +3,7 @@
   "short_name": "Guía Japón",
   "description": "Guía interactiva de viaje a Japón de 12 días, optimizada para móvil.",
   "lang": "es",
-  "start_url": "./index.html?v=29.0",
+  "start_url": "./index.html?v=31.0",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
