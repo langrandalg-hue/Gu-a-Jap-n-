@@ -5,11 +5,11 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <meta content="#b91c1c" name="theme-color"/>
-<link href="./manifest.webmanifest?v=25.0" rel="manifest"/>
-<link href="./apple-touch-icon.png?v=25.0" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./manifest.webmanifest?v=29.0" rel="manifest"/>
+<link href="./apple-touch-icon.png?v=29.0" rel="apple-touch-icon" sizes="180x180"/>
 <meta content="Guía Japón" name="apple-mobile-web-app-title"/>
-<link href="./apple-touch-icon.png?v=25.0" rel="apple-touch-icon" sizes="180x180"/>
-<link href="./apple-touch-icon.png?v=25.0" rel="icon" sizes="192x192" type="image/png"/>
+<link href="./apple-touch-icon.png?v=29.0" rel="apple-touch-icon" sizes="180x180"/>
+<link href="./apple-touch-icon.png?v=29.0" rel="icon" sizes="192x192" type="image/png"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="default" name="apple-mobile-web-app-status-bar-style"/>
 <title>Guía Japón</title>
@@ -953,6 +953,7 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderItems);else renderItems();
 })();
 </script>
+
 <script>
 (function(){
  const form=document.getElementById('guide-search');
@@ -960,39 +961,72 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
  const status=document.getElementById('guide-search-status');
  if(!form||!input||!status)return;
  let hits=[],current=0;
- function cleanMarks(){
-   document.querySelectorAll('mark.guide-search-hit').forEach(mark=>mark.replaceWith(document.createTextNode(mark.textContent)));
- }
+ const panel=document.createElement('div');
+ panel.id='guide-search-results';
+ panel.className='guide-search-results';
+ panel.hidden=true;
+ panel.setAttribute('aria-label','Resultados de búsqueda');
+ status.insertAdjacentElement('afterend',panel);
+ const style=document.createElement('style');
+ style.textContent=`.guide-search-results{margin-top:.8rem;padding-top:.75rem;border-top:1px solid #ddd;color:#222}.guide-search-results[hidden]{display:none}.guide-search-results .gs-controls{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin:.5rem 0}.guide-search-results button{border:0;border-radius:8px;padding:.55rem .8rem;background:#b5121b;color:#fff;font:inherit;font-weight:700;cursor:pointer}.guide-search-results button:disabled{opacity:.45;cursor:not-allowed}.guide-search-results ol{padding-left:1.5rem;margin:.6rem 0}.guide-search-results li{margin:.5rem 0}.guide-search-results .gs-item{display:flex;align-items:flex-start;gap:.5rem}.guide-search-results .gs-item button{flex-shrink:0;padding:.4rem .65rem}.guide-search-results .gs-snippet{min-width:0;overflow-wrap:anywhere;font-size:.92rem}.guide-search-results .gs-active{outline:2px solid #b5121b;outline-offset:2px;border-radius:5px;padding:.2rem}.guide-search-results .gs-muted{font-size:.88rem;color:#555}`;
+ document.head.appendChild(style);
+ function cleanMarks(){document.querySelectorAll('mark.guide-search-hit').forEach(mark=>mark.replaceWith(document.createTextNode(mark.textContent)));}
  function norm(text){return text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es');}
+ function contextFor(mark){
+   const el=mark.closest('p,li,h1,h2,h3,h4,td,th,blockquote,figcaption')||mark.parentElement;
+   return (el?.innerText||el?.textContent||mark.textContent).replace(/\s+/g,' ').trim().slice(0,190);
+ }
+ function goTo(index){
+   if(!hits.length)return;
+   current=Math.max(0,Math.min(index,hits.length-1));
+   hits.forEach((h,i)=>{h.classList.toggle('gs-active',i===current);});
+   const count=panel.querySelector('.gs-count');if(count)count.textContent='Resultado '+(current+1)+' de '+hits.length;
+   panel.querySelectorAll('[data-result-index]').forEach(b=>{if(Number(b.dataset.resultIndex)===current)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current');});
+   hits[current].scrollIntoView({behavior:'smooth',block:'center'});
+   hits[current].setAttribute('tabindex','-1');
+   try{hits[current].focus({preventScroll:true});}catch(e){}
+ }
+ function renderResults(term){
+   panel.replaceChildren();panel.hidden=false;
+   const controls=document.createElement('div');controls.className='gs-controls';
+   const count=document.createElement('strong');count.className='gs-count';count.textContent='Resultado 1 de '+hits.length;
+   const buttons=document.createElement('div');buttons.className='gs-controls';
+   const prev=document.createElement('button');prev.type='button';prev.textContent='← Anterior';prev.disabled=true;prev.addEventListener('click',()=>goTo(current-1));
+   const next=document.createElement('button');next.type='button';next.textContent='Siguiente →';next.addEventListener('click',()=>goTo(current+1));
+   buttons.append(prev,next);controls.append(count,buttons);panel.append(controls);
+   const note=document.createElement('p');note.className='gs-muted';note.textContent='También puedes elegir directamente cualquier resultado de la lista:';panel.append(note);
+   const list=document.createElement('ol');
+   hits.forEach((hit,i)=>{
+     const li=document.createElement('li');const wrap=document.createElement('div');wrap.className='gs-item';
+     const btn=document.createElement('button');btn.type='button';btn.textContent='Ver';btn.dataset.resultIndex=String(i);btn.setAttribute('aria-label','Ver resultado '+(i+1));btn.addEventListener('click',()=>goTo(i));
+     const snippet=document.createElement('span');snippet.className='gs-snippet';snippet.textContent=contextFor(hit)||('Coincidencia con «'+term+'»');
+     wrap.append(btn,snippet);li.append(wrap);list.append(li);
+   });
+   panel.append(list);
+   function updateButtons(){prev.disabled=current<=0;next.disabled=current>=hits.length-1;}
+   prev.addEventListener('click',updateButtons);next.addEventListener('click',updateButtons);
+   panel.addEventListener('click',function(ev){if(ev.target===prev||ev.target===next)updateButtons();});
+ }
  form.addEventListener('submit',function(ev){
-   ev.preventDefault();
-   cleanMarks(); hits=[];current=0;
+   ev.preventDefault();cleanMarks();hits=[];current=0;panel.hidden=true;panel.replaceChildren();
    const term=input.value.trim();
    if(!term){status.textContent='Escribe una palabra para buscarla en la guía.';input.focus();return;}
    const wanted=norm(term);
    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
-     acceptNode(node){
-       const parent=node.parentElement;
-       if(!parent||parent.closest('script,style,noscript,textarea,input,button,select,option,form#guide-search'))return NodeFilter.FILTER_REJECT;
-       return norm(node.nodeValue).includes(wanted)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
-     }
+     acceptNode(node){const parent=node.parentElement;if(!parent||parent.closest('script,style,noscript,textarea,input,button,select,option,form#guide-search,#guide-search-results'))return NodeFilter.FILTER_REJECT;return norm(node.nodeValue).includes(wanted)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}
    });
    const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
    nodes.forEach(node=>{
-     const text=node.nodeValue,normalized=norm(text),at=normalized.indexOf(wanted);
-     if(at<0)return;
-     // Match first occurrence per text node; keep the original spelling and accents.
+     const text=node.nodeValue,normalized=norm(text),at=normalized.indexOf(wanted);if(at<0)return;
      const before=text.slice(0,at),match=text.slice(at,at+term.length),after=text.slice(at+term.length);
      const mark=document.createElement('mark');mark.className='guide-search-hit';mark.textContent=match;
-     const frag=document.createDocumentFragment();if(before)frag.append(document.createTextNode(before));frag.append(mark);if(after)frag.append(document.createTextNode(after));
-     node.replaceWith(frag);hits.push(mark);
+     const frag=document.createDocumentFragment();if(before)frag.append(document.createTextNode(before));frag.append(mark);if(after)frag.append(document.createTextNode(after));node.replaceWith(frag);hits.push(mark);
    });
    if(!hits.length){status.textContent='No he encontrado «'+term+'». Prueba con otra palabra.';return;}
-   status.textContent='Encontrada en '+hits.length+' lugar(es). Te llevo al primer resultado.';
-   hits[0].scrollIntoView({behavior:'smooth',block:'center'});
-   hits[0].setAttribute('tabindex','-1');hits[0].focus({preventScroll:true});
+   status.textContent='He encontrado '+hits.length+' coincidencia(s) para «'+term+'».';
+   renderResults(term);goTo(0);
  });
- input.addEventListener('input',function(){if(!input.value.trim())status.textContent='Busca nombres, lugares o cualquier palabra de la guía.';});
+ input.addEventListener('input',function(){if(!input.value.trim()){status.textContent='Busca nombres, lugares o cualquier palabra de la guía.';panel.hidden=true;}});
 })();
 </script>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js",{scope:"./"}).catch(()=>{}));}</script>
