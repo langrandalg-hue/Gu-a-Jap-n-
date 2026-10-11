@@ -143,6 +143,18 @@ tr:nth-child(even) td{background:#f8fafc}
 .quote-image img{display:block;width:100%;height:auto}
 @media print{.quote-image{break-inside:avoid}}
 </style>
+
+<style>
+.guide-search{margin:1rem auto;padding:1rem;max-width:900px;border:1px solid #d9d9d9;border-radius:14px;background:#fff;color:#222;box-sizing:border-box}
+.guide-search label{display:block;font-weight:700;margin-bottom:.55rem}
+.guide-search-row{display:flex;gap:.5rem;align-items:stretch}
+.guide-search-row input{flex:1;min-width:0;padding:.7rem .8rem;border:1px solid #aaa;border-radius:9px;font:inherit;color:#222;background:#fff}
+.guide-search-row button{padding:.7rem 1rem;border:0;border-radius:9px;background:#b5121b;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.guide-search-status{margin:.55rem 0 0;font-size:.9rem;color:#555}
+.guide-search mark.guide-search-hit{background:#ffe36e;color:#222;padding:0 .08em;border-radius:2px}
+@media(max-width:420px){.guide-search{margin:.75rem .5rem;padding:.8rem}.guide-search-row button{padding:.65rem .8rem}}
+</style>
+
 </head>
 <body>
 <div class="wrap">
@@ -159,6 +171,11 @@ tr:nth-child(even) td{background:#f8fafc}
 <p>Tokio → Kawaguchiko → Hakone → Osaka → Kioto → Hiroshima/Miyajima → Nara → Tokio</p>
 <span class="badge">Guía práctica para viajar por Japón<br/><small>Creada por Orlando</small></span>
 </header>
+<form id="guide-search" class="guide-search" role="search" aria-label="Buscar en la guía">
+  <label for="guide-search-input">🔎 Buscar en la guía</label>
+  <div class="guide-search-row"><input id="guide-search-input" type="search" placeholder="Escribe una palabra…" autocomplete="off" aria-label="Palabra que quieres buscar"><button type="submit">Buscar</button></div>
+  <p id="guide-search-status" class="guide-search-status" aria-live="polite">Busca nombres, lugares o cualquier palabra de la guía.</p>
+</form>
 <nav aria-label="Accesos rápidos a todas las secciones" class="nav"><a href="#itinerario">🗓️ Itinerario</a><a href="#maps">📍 Maps</a><a href="#comida">🍜 Comida</a><a href="#civitatis">🎟️ Visitas en español</a><a href="#transporte">🚆 Transporte</a><a href="#suica">🚇 Suica/PASMO</a><a href="#shinkansen">🚄 Shinkansen</a><a href="#jrpass">🚅 JR Pass</a><a href="#esim">📶 eSIM</a><a href="#dinero">💴 Dinero</a><a href="#dinero-extra">💴 Dinero y pagos</a><a href="#conversor">💱 Conversor ¥/€</a><a href="#comparador-precios">🛍️ Comparador de precios</a><a href="#compras">🛍️ Compras</a><a href="#apps">📱 Apps</a><a href="#hoteles-equipaje">🏨 Hoteles</a><a href="#emergencias">🆘 Emergencias</a><a href="#japones">🗣️ Japonés</a><a href="#fotos">📸 Fotos</a><a href="#consejos">💡 Consejos</a><a href="#actividades">🎎 Actividades</a><a href="#mi-viaje">📂 Mi viaje</a><a href="#preparacion">✅ Preparación</a><a href="#manual-rapido">📖 Manual rápido</a><a href="#fuentes">🔗 Fuentes oficiales</a><a href="#recurso">🔗 Recurso recomendado</a></nav>
 
 <footer class="footer">
@@ -504,7 +521,7 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
 
 </section>
 <section id="comparador-precios" class="guide-section">
-<h2>🛍️ Comparador de precios en España (prueba v27)</h2>
+<h2>🛍️ Comparador de precios en España</h2>
 <p>Haz una foto o elige una imagen del producto, escribe la marca y el modelo, introduce el precio japonés y abre búsquedas de tiendas para comparar precios en España. La foto es una referencia visual: no identifica automáticamente el producto.</p>
 <div class="info">
 <label for="pc-photo"><b>1. Foto del producto (opcional)</b></label>
@@ -578,7 +595,7 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
  const fmt=(n,d=2)=>Number(n).toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d});
  function paint(){ $('fx-rate').textContent=rate?'1 € = '+fmt(rate,2)+' ¥':'Cambio pendiente de cargar'; $('fx-status').textContent= mode==='manual'?'Cambio manual activo'+(rateDate?' · referencia automática guardada: '+rateDate:''):'Cambio automático de referencia'+(rateDate?' · fecha del dato: '+rateDate:''); calc(lastEdited); }
  function calc(which){if(!rate)return;if(which==='eur'){const v=parseFloat($('fx-eur').value);if(Number.isFinite(v)&&v>=0)$('fx-jpy').value=String(Math.round(v*rate));}else{const v=parseFloat($('fx-jpy').value);if(Number.isFinite(v)&&v>=0)$('fx-eur').value=(v/rate).toFixed(2)}}
- async function refresh(){ $('fx-status').textContent='Consultando el último cambio disponible…';$('fx-refresh').disabled=true;try{const r=await fetch('https://api.frankfurter.app/latest?from=EUR&to=JPY',{cache:'no-store'});if(!r.ok)throw new Error('No se pudo consultar el servicio');const d=await r.json();const fresh=Number(d.rates&&d.rates.JPY);if(!Number.isFinite(fresh)||fresh<=0)throw new Error('Respuesta sin tipo de cambio válido');rateDate=d.date||new Date().toISOString().slice(0,10);localStorage.setItem('guiaJaponFxAuto',String(fresh));localStorage.setItem('guiaJaponFxDate',rateDate);if(mode==='auto')rate=fresh;paint();if(mode==='manual')$('fx-status').textContent='Cambio manual activo · referencia automática actualizada: '+rateDate;$('fx-manual-msg').textContent='Último dato automático consultado: '+rateDate+'.';}catch(e){$('fx-status').textContent='No se pudo actualizar ahora. Comprueba la conexión e inténtalo de nuevo.';const saved=Number(localStorage.getItem('guiaJaponFxAuto'));if(mode==='auto'&&saved>0){rate=saved;paint();$('fx-status').textContent='Usando el último cambio automático guardado'+(rateDate?' · '+rateDate:'')+'. No se ha podido actualizar ahora.';}}finally{$('fx-refresh').disabled=false;}}
+ async function refresh(){ $('fx-status').textContent='Consultando el último cambio disponible…';$('fx-refresh').disabled=true;try{const r=await fetch('https://api.frankfurter.app/latest?from=EUR&to=JPY',{cache:'no-store'});if(!r.ok)throw new Error('No se pudo consultar el servicio');const d=await r.json();const fresh=Number(d.rates&&d.rates.JPY);if(!Number.isFinite(fresh)||fresh<=0)throw new Error('Respuesta sin tipo de cambio válido');rateDate=d.date||new Date().toISOString().slice(0,10);localStorage.setItem('guiaJaponFxAuto',String(fresh));localStorage.setItem('guiaJaponFxDate',rateDate);if(mode==='auto')rate=fresh;paint();if(mode==='manual')$('fx-status').textContent='Cambio manual activo · referencia automática actualizada: '+rateDate;$('fx-manual-msg').textContent='Último dato automático consultado: '+rateDate+'.';}catch(e){$('fx-status').textContent='No se pudo actualizar ahora. No se ha podido consultar la fuente del cambio. Comprueba la conexión o utiliza el cambio manual.';const saved=Number(localStorage.getItem('guiaJaponFxAuto'));if(mode==='auto'&&saved>0){rate=saved;paint();$('fx-status').textContent='Usando el último cambio automático guardado'+(rateDate?' · '+rateDate:'')+'. No se ha podido actualizar ahora.';}}finally{$('fx-refresh').disabled=false;}}
  const savedAuto=Number(localStorage.getItem('guiaJaponFxAuto'));if(mode==='auto'&&savedAuto>0)rate=savedAuto;
  $('fx-eur').addEventListener('input',()=>{lastEdited='eur';calc('eur')});$('fx-jpy').addEventListener('input',()=>{lastEdited='jpy';calc('jpy')});$('fx-refresh').addEventListener('click',refresh);
  $('fx-apply').addEventListener('click',()=>{const n=Number(String($('fx-manual').value).replace(',','.'));if(!Number.isFinite(n)||n<=0){$('fx-manual-msg').textContent='Introduce un cambio válido mayor que cero.';return;}rate=n;mode='manual';localStorage.setItem('guiaJaponFxManual',String(n));$('fx-manual-msg').textContent='Aplicado: 1 € = '+fmt(n,2)+' ¥. Guardado en este dispositivo.';paint();});
@@ -934,6 +951,48 @@ Archivo HTML autónomo y optimizado para móvil · Última revisión: octubre de
   };
   async function renderItems(){const box=document.getElementById('tripList');if(!box)return;const items=getItems();if(!items.length){box.innerHTML='<p class="trip-empty">Todavía no has guardado ningún dato.</p>';return;}const cards=[];for(const x of items){let details=[];if(x.provider)details.push('<b>Proveedor:</b> '+esc(x.provider));if(x.date)details.push('<b>Fecha:</b> '+esc(x.date));if(x.ref)details.push('<b>Referencia:</b> '+esc(x.ref));if(x.phone)details.push('<b>Tel.:</b> '+esc(x.phone));const files=await getAttachments(x.id);const links=files.map(f=>'<p><button class="btn" type="button" onclick="openTripAttachment(\''+esc(f.id)+'\')">📎 Abrir archivo: '+esc(f.name)+'</button></p>').join('');cards.push('<article class="trip-item"><h3>'+esc(x.type)+' · '+esc(x.title)+'</h3><div class="trip-meta">'+details.join(' · ')+'</div>'+(x.notes?'<p>'+esc(x.notes)+'</p>':'')+(x.url?'<p><a class="btn" href="'+esc(x.url)+'" target="_blank" rel="noopener">🔗 Abrir enlace</a></p>':'')+links+'<div class="trip-actions"><button type="button" onclick="editTrip('+x.id+')">✏️ Editar</button><button class="delete" type="button" onclick="deleteTrip('+x.id+')">🗑️ Eliminar</button></div></article>')}box.innerHTML=cards.join('')}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',renderItems);else renderItems();
+})();
+</script>
+<script>
+(function(){
+ const form=document.getElementById('guide-search');
+ const input=document.getElementById('guide-search-input');
+ const status=document.getElementById('guide-search-status');
+ if(!form||!input||!status)return;
+ let hits=[],current=0;
+ function cleanMarks(){
+   document.querySelectorAll('mark.guide-search-hit').forEach(mark=>mark.replaceWith(document.createTextNode(mark.textContent)));
+ }
+ function norm(text){return text.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es');}
+ form.addEventListener('submit',function(ev){
+   ev.preventDefault();
+   cleanMarks(); hits=[];current=0;
+   const term=input.value.trim();
+   if(!term){status.textContent='Escribe una palabra para buscarla en la guía.';input.focus();return;}
+   const wanted=norm(term);
+   const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+     acceptNode(node){
+       const parent=node.parentElement;
+       if(!parent||parent.closest('script,style,noscript,textarea,input,button,select,option,form#guide-search'))return NodeFilter.FILTER_REJECT;
+       return norm(node.nodeValue).includes(wanted)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+     }
+   });
+   const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+   nodes.forEach(node=>{
+     const text=node.nodeValue,normalized=norm(text),at=normalized.indexOf(wanted);
+     if(at<0)return;
+     // Match first occurrence per text node; keep the original spelling and accents.
+     const before=text.slice(0,at),match=text.slice(at,at+term.length),after=text.slice(at+term.length);
+     const mark=document.createElement('mark');mark.className='guide-search-hit';mark.textContent=match;
+     const frag=document.createDocumentFragment();if(before)frag.append(document.createTextNode(before));frag.append(mark);if(after)frag.append(document.createTextNode(after));
+     node.replaceWith(frag);hits.push(mark);
+   });
+   if(!hits.length){status.textContent='No he encontrado «'+term+'». Prueba con otra palabra.';return;}
+   status.textContent='Encontrada en '+hits.length+' lugar(es). Te llevo al primer resultado.';
+   hits[0].scrollIntoView({behavior:'smooth',block:'center'});
+   hits[0].setAttribute('tabindex','-1');hits[0].focus({preventScroll:true});
+ });
+ input.addEventListener('input',function(){if(!input.value.trim())status.textContent='Busca nombres, lugares o cualquier palabra de la guía.';});
 })();
 </script>
 <script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js",{scope:"./"}).catch(()=>{}));}</script>
